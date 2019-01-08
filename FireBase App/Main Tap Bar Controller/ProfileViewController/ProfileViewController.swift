@@ -46,7 +46,7 @@ class ProfileViewController: UICollectionViewController, UICollectionViewDelegat
             guard let user = self.user else { return }
             
             let post = Post(user: user, dictionary: dictionary)
-            self.posts.append(post)
+            self.posts.insert(post, at: 0)
             
             self.collectionView.reloadData()
         }) { (err) in
@@ -115,16 +115,6 @@ class ProfileViewController: UICollectionViewController, UICollectionViewDelegat
         }) { (err) in
             print("Failed to fetch user:", err)
         }
-    }
-}
-
-struct User {
-    let username: String
-    let profileImageUrl: String
-    
-    init(dictionary: [String: Any]) {
-        self.username = dictionary["username"] as? String ?? ""
-        self.profileImageUrl = dictionary["profileImageUrl"]  as? String ?? ""
     }
 }
 
