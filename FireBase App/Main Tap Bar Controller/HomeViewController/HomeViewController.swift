@@ -19,6 +19,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         
         collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: cellId)
         
+        
         setupNavigationItems()
         
         fetchPosts()
@@ -28,31 +29,27 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     fileprivate func fetchPosts() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        Database.database().reference().child("users").child(uid).observe(.value, with: { (snapshot) in
+        Database.fetchUserWithUID(uid: uid) { (user) in
+            self.fetchPostsWithUser(user: user)
+        }
+    }
+    
+    private func fetchPostsWithUser(user: User) {
+        
+        let ref = Database.database().reference().child("posts").child(user.uid)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
             
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
-            let user = User(dictionary: dictionary)
-            
-            let ref = Database.database().reference().child("posts").child(uid)
-            ref.observeSingleEvent(of: .value, with: { (snapshot) in
-                guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            dictionaries.forEach({ (key, value) in
+                guard let dictionary = value as? [String: Any] else { return }
                 
-                dictionaries.forEach({ (key, value) in
-                    guard let dictionary = value as? [String: Any] else { return }
-                    
-                    let post = Post(user: user, dictionary: dictionary)
-                    self.posts.append(post)
-                })
-                
-                self.collectionView?.reloadData()
-                
-            }) { (err) in
-                print("Failed to fetch posts:", err)
-            }
+                let post = Post(user: user, dictionary: dictionary)
+                self.posts.append(post)
+            })
+            self.collectionView?.reloadData()
             
         }) { (err) in
-            print("Failed to fecth user for posts: ", err)
+            print("Failed to fetch posts:", err)
         }
     }
     
@@ -83,5 +80,4 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         
         return cell
     }
-    
 }

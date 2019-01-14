@@ -51,10 +51,12 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "icons8-home-100"), selectedImage: #imageLiteral(resourceName: "icons8-home-filled-100"), rootViewController: HomeViewController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         //search
-        let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "icons8-search-100"), selectedImage: #imageLiteral(resourceName: "icons8-search-filled-100"))
+        let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "icons8-search-100"), selectedImage: #imageLiteral(resourceName: "icons8-search-filled-100"), rootViewController: SearchViewController(collectionViewLayout: UICollectionViewFlowLayout()))
         
+        //new post
         let plusNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "icons8-plus-100"), selectedImage: #imageLiteral(resourceName: "icons8-plus-100"))
         
+        //like vc
         let likeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "icons8-heart-outline-100"), selectedImage: #imageLiteral(resourceName: "icons8-heart-outline-filled-100"), rootViewController: FavoritesViewController())
         
         //user profile
