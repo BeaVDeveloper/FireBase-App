@@ -24,8 +24,6 @@ class CustomImageView: UIImageView {
         
         guard let url = URL(string: urlString) else { return }
         
-        print(urlString)
-        
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             if let err = err {
                 print("Failed to fecth post image: ", err)
