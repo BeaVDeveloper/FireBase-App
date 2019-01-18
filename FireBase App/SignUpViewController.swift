@@ -42,6 +42,9 @@ class SignUpViewController: UIViewController {
         textFieldsTarget(); setUpPlaceholders()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
    
     @IBAction func showPassButton(_ sender: UIButton) {
         showPassBtn.animateTap()

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class HeaderView: UICollectionViewCell {
     
@@ -14,12 +16,40 @@ class HeaderView: UICollectionViewCell {
         didSet {
             setupProfileImage()
             nameLabel.text = user?.username
+            
+            setupEditFollowButton()
+        }
+    }
+    
+    private func setupEditFollowButton() {
+        guard let currentLoggedUserId = Auth.auth().currentUser?.uid else { return }
+        
+        guard let userId = user?.uid else { return }
+        
+        if currentLoggedUserId == userId {
+            //edit profile
+        } else {
+            //check if following
+        Database.database().reference().child("following").child(currentLoggedUserId).child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+                if let isFollowing = snapshot.value as? Int, isFollowing == 1 {
+                
+                    self.editProfileFollowBtn.setTitle("Unfollow", for: .normal)
+                    
+                } else {
+                    self.setupFollowStyle()
+                }
+            
+            }) { (err) in
+                print("Failed to check of following: ", err)
+            }
         }
     }
     
     let photoButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setBackgroundImage(#imageLiteral(resourceName: "plus_photo"), for: .normal)
+        btn.addTarget(self, action: #selector(handlePhoto), for: .touchUpInside)
         return btn
     }()
     
@@ -63,7 +93,7 @@ class HeaderView: UICollectionViewCell {
         label.textAlignment = .center
         return label
     }()
-    let editProfileBtn: UIButton = {
+    lazy var editProfileFollowBtn: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("Edit profile", for: .normal)
         btn.setTitleColor(.black, for: .normal)
@@ -71,6 +101,7 @@ class HeaderView: UICollectionViewCell {
         btn.layer.cornerRadius = 10
         btn.titleLabel?.textAlignment = .center
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        btn.addTarget(self, action: #selector(handleEditProfileOrFollow), for: .touchUpInside)
         return btn
     }()
     
@@ -104,10 +135,8 @@ class HeaderView: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         backgroundColor = .white
         
-        setUpHeaderButtonsTargets()
         setupBottomToolbar()
         
         addSubview(photoButton)
@@ -117,19 +146,14 @@ class HeaderView: UICollectionViewCell {
         addSubview(nameLabel)
         nameLabel.anchor(top: photoButton.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 11, paddingBottom: 0, paddingRight: 0, width: 100, height: 30)
         
-        setupUserStatsView()
+        setupUserStaksView()
         
-        addSubview(editProfileBtn)
-        editProfileBtn.anchor(top: postsLabel.bottomAnchor, left: postsLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
+        addSubview(editProfileFollowBtn)
+        editProfileFollowBtn.anchor(top: postsLabel.bottomAnchor, left: postsLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
         
     }
     
-    private func setUpHeaderButtonsTargets() {
-        photoButton.addTarget(self, action: #selector(handlePhoto), for: .touchUpInside)
-        editProfileBtn.addTarget(self, action: #selector(handleEdit), for: .touchUpInside)
-    }
-    
-    private func setupUserStatsView() {
+    private func setupUserStaksView() {
         let stackView = UIStackView(arrangedSubviews: [postsLabel, followersLabel, followingLabel])
         
         stackView.distribution = .fillEqually
@@ -164,10 +188,8 @@ class HeaderView: UICollectionViewCell {
     
     private func setupProfileImage() {
         guard let profileImageUrl = user?.profileImageUrl else { return }
-        print(profileImageUrl)
         
         guard let url = URL(string: profileImageUrl) else { return }
-        print(url)
         
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             //check for the error, then construct the image using data

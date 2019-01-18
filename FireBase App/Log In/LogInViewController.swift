@@ -41,6 +41,10 @@ class LogInViewController: UIViewController {
         setUpPlaceholders(); textFieldsTarget()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     @IBAction func logInButton(_ sender: UIButton) {
         logInButton.animateTap()
         

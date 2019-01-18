@@ -43,7 +43,55 @@ extension HeaderView {
         print("PHOTO")
     }
     
-    @objc func handleEdit() {
-        print("EDIT")
+    @objc func handleEditProfileOrFollow() {
+        print("Follow")
+        
+        editProfileFollowBtn.animateTap()
+        
+        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
+        
+        guard let userId = user?.uid else { return }
+        
+        if editProfileFollowBtn.titleLabel?.text == "Unfollow" {
+            //unfollow
+            Database.database().reference().child("following").child(currentLoggedInUserId).child(userId).removeValue { (err, ref) in
+                
+                if let err = err {
+                    print("Failed to unfollow user: ", err)
+                    return
+                }
+                
+                print("Successfully unfollowed user: ", self.user?.username ?? "")
+                
+                self.setupFollowStyle()
+            }
+            
+        } else if editProfileFollowBtn.titleLabel?.text == "Follow" {
+            //follow
+            let ref = Database.database().reference().child("following").child(currentLoggedInUserId)
+            
+            let values = [userId: 1]
+            
+            ref.updateChildValues(values) { (err, ref) in
+                if let err = err {
+                    print("Failed to follow user: ", err)
+                    return
+                }
+                
+                print("Successfully followed user: ", self.user?.username ?? "")
+                
+                self.editProfileFollowBtn.setTitle("Unfollow", for: .normal)
+                self.editProfileFollowBtn.backgroundColor = .white
+                self.editProfileFollowBtn.setTitleColor(.black, for: .normal)
+            }
+        }
+    }
+    
+    
+    func setupFollowStyle() {
+        self.editProfileFollowBtn.setTitle("Follow", for: .normal)
+        self.editProfileFollowBtn.backgroundColor = #colorLiteral(red: 0.05882352941, green: 0.6039215686, blue: 0.9294117647, alpha: 1)
+        self.editProfileFollowBtn.setTitleColor(.white, for: .normal)
+        self.editProfileFollowBtn.layer.borderColor = UIColor(white: 0, alpha: 0.2).cgColor
     }
 }
