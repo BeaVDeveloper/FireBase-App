@@ -21,7 +21,6 @@ class ProfileViewController: UICollectionViewController, UICollectionViewDelegat
         
         collectionView?.backgroundColor = .white
         collectionView?.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerId")
-        
         collectionView?.register(ProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
         
         setupLogOutButton()
@@ -38,7 +37,6 @@ class ProfileViewController: UICollectionViewController, UICollectionViewDelegat
     
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
             
             guard let user = self.user else { return }
             
@@ -85,9 +83,6 @@ class ProfileViewController: UICollectionViewController, UICollectionViewDelegat
         
         header.user = self.user
         
-        //not correct
-        //header.addSubview(UIImageView())
-        
         return header
     }
     
@@ -103,6 +98,7 @@ class ProfileViewController: UICollectionViewController, UICollectionViewDelegat
         Database.fetchUserWithUID(uid: uid) { (user) in
             self.user = user
             self.navigationItem.title = self.user?.username
+            
             self.collectionView?.reloadData()
             self.fetchOrderedPosts()
         }

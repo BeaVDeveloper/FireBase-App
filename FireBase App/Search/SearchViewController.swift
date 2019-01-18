@@ -47,6 +47,7 @@ class SearchViewController: UICollectionViewController, UICollectionViewDelegate
         
         
         collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
+        
         collectionView.alwaysBounceVertical = true
         collectionView.keyboardDismissMode = .onDrag
         
@@ -64,7 +65,6 @@ class SearchViewController: UICollectionViewController, UICollectionViewDelegate
         searchBar.resignFirstResponder()
         
         let user = filteredUsers[indexPath.item]
-        print(user.username)
         
         let profileViewController = ProfileViewController(collectionViewLayout: UICollectionViewFlowLayout())
         profileViewController.userId = user.uid

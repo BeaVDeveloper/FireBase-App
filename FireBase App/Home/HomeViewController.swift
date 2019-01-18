@@ -15,17 +15,26 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = .white
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUpdateFeed), name: SharePhotoController.updateNotificationName, object: nil)
+        
+        collectionView?.backgroundColor = .white
         collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: cellId)
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
         
         setupNavigationItems()
         
+        fetchAllPosts()
+        
+        setupSwipeGesture()
+    }
+    
+    func fetchAllPosts() {
         fetchPosts()
-        
         fetchFollowingUsersIds()
-        
     }
     
     fileprivate func fetchFollowingUsersIds() {
@@ -39,8 +48,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
                     self.fetchPostsWithUser(user: user)
                 })
             })
-            
-            
         }) { (err) in
             print("Failed to fetch following users ids: ", err)
         }
@@ -59,6 +66,9 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         
         let ref = Database.database().reference().child("posts").child(user.uid)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            self.collectionView.refreshControl?.endRefreshing()
+            
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
             
             dictionaries.forEach({ (key, value) in
@@ -77,9 +87,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         }
     }
     
-    func setupNavigationItems() {
-        navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
-    }
+   
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -87,7 +95,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         height += view.frame.width
         height += 50
         height += 60
-        
         
         return CGSize(width: view.frame.width, height: height)
     }

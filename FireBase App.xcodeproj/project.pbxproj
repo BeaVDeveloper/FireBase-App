@@ -24,6 +24,11 @@
 		1B72B45721CBC47F00C5765F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B72B45521CBC47F00C5765F /* LaunchScreen.storyboard */; };
 		1B72B46021CBD73300C5765F /* SignUpExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B72B45F21CBD73300C5765F /* SignUpExtensions.swift */; };
 		1B72B46221CBD82200C5765F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B72B46121CBD82200C5765F /* GoogleService-Info.plist */; };
+		1B7D39D321F1DCA600307B2F /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7D39D221F1DCA600307B2F /* CameraController.swift */; };
+		1B7D39D521F1F3E300307B2F /* PreviewPhotoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7D39D421F1F3E300307B2F /* PreviewPhotoContainerView.swift */; };
+		1B7D39D721F2055000307B2F /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7D39D621F2055000307B2F /* CustomAnimationPresentor.swift */; };
+		1B7D39D921F20F5800307B2F /* CustiomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7D39D821F20F5800307B2F /* CustiomAnimationDismisser.swift */; };
+		1B7D39DB21F2142800307B2F /* Targets + NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7D39DA21F2142800307B2F /* Targets + NavItem.swift */; };
 		1B7E943021E4FF13000B99C0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7E942F21E4FF13000B99C0 /* User.swift */; };
 		1B9482F521D3B12E00731F56 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9482F421D3B12E00731F56 /* HomeViewController.swift */; };
 		1B9482FE21D3B2B700731F56 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9482FD21D3B2B700731F56 /* MainTabBarController.swift */; };
@@ -59,6 +64,11 @@
 		1B72B45821CBC47F00C5765F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B72B45F21CBD73300C5765F /* SignUpExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpExtensions.swift; sourceTree = "<group>"; };
 		1B72B46121CBD82200C5765F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1B7D39D221F1DCA600307B2F /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		1B7D39D421F1F3E300307B2F /* PreviewPhotoContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPhotoContainerView.swift; sourceTree = "<group>"; };
+		1B7D39D621F2055000307B2F /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
+		1B7D39D821F20F5800307B2F /* CustiomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustiomAnimationDismisser.swift; sourceTree = "<group>"; };
+		1B7D39DA21F2142800307B2F /* Targets + NavItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Targets + NavItem.swift"; sourceTree = "<group>"; };
 		1B7E942F21E4FF13000B99C0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1B9482F421D3B12E00731F56 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1B9482FD21D3B2B700731F56 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -118,11 +128,17 @@
 		1B72B44B21CBC47E00C5765F /* FireBase App */ = {
 			isa = PBXGroup;
 			children = (
+				1B7D39D121F1DC8E00307B2F /* Camera */,
 				1B0EB5C721DCFF56002EB798 /* Models */,
-				1B9482F821D3B21C00731F56 /* Main Tap Bar Controller */,
+				1B9482F921D3B22B00731F56 /* Home */,
+				1B9482FB21D3B25200731F56 /* Search */,
+				1BC2D9B021D4E88C00DBB362 /* AddPost */,
+				1B9482FC21D3B26300731F56 /* Favorites */,
+				1B9482FA21D3B24600731F56 /* Profile */,
 				1B72B45E21CBD71300C5765F /* Utils */,
 				1B9482F721D3B1E900731F56 /* Sign Up */,
 				1B9482F621D3B1D300731F56 /* Log In */,
+				1B9482FD21D3B2B700731F56 /* MainTabBarController.swift */,
 				1B72B44C21CBC47E00C5765F /* AppDelegate.swift */,
 				1B72B45021CBC47E00C5765F /* Main.storyboard */,
 				1B72B45321CBC47F00C5765F /* Assets.xcassets */,
@@ -144,6 +160,17 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		1B7D39D121F1DC8E00307B2F /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				1B7D39D221F1DCA600307B2F /* CameraController.swift */,
+				1B7D39D421F1F3E300307B2F /* PreviewPhotoContainerView.swift */,
+				1B7D39D621F2055000307B2F /* CustomAnimationPresentor.swift */,
+				1B7D39D821F20F5800307B2F /* CustiomAnimationDismisser.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 		1B9482F621D3B1D300731F56 /* Log In */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,29 +189,17 @@
 			name = "Sign Up";
 			sourceTree = "<group>";
 		};
-		1B9482F821D3B21C00731F56 /* Main Tap Bar Controller */ = {
-			isa = PBXGroup;
-			children = (
-				1B9482FD21D3B2B700731F56 /* MainTabBarController.swift */,
-				1B9482F921D3B22B00731F56 /* HomeViewController */,
-				1B9482FB21D3B25200731F56 /* SearchViewController' */,
-				1BC2D9B021D4E88C00DBB362 /* AddPostViewController */,
-				1B9482FC21D3B26300731F56 /* FavoritesViewController */,
-				1B9482FA21D3B24600731F56 /* ProfileViewController */,
-			);
-			path = "Main Tap Bar Controller";
-			sourceTree = "<group>";
-		};
-		1B9482F921D3B22B00731F56 /* HomeViewController */ = {
+		1B9482F921D3B22B00731F56 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				1B9482F421D3B12E00731F56 /* HomeViewController.swift */,
 				1B4B41F221DE735F0033ABA6 /* HomePostCell.swift */,
+				1B7D39DA21F2142800307B2F /* Targets + NavItem.swift */,
 			);
-			path = HomeViewController;
+			path = Home;
 			sourceTree = "<group>";
 		};
-		1B9482FA21D3B24600731F56 /* ProfileViewController */ = {
+		1B9482FA21D3B24600731F56 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				1B9482FF21D3B2C100731F56 /* ProfileViewController.swift */,
@@ -192,27 +207,27 @@
 				1B94830121D3B2C900731F56 /* HeaderView.swift */,
 				1B0EB5CA21DD0260002EB798 /* ProfilePhotoCell.swift */,
 			);
-			path = ProfileViewController;
+			path = Profile;
 			sourceTree = "<group>";
 		};
-		1B9482FB21D3B25200731F56 /* SearchViewController' */ = {
+		1B9482FB21D3B25200731F56 /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				1B94830721D3B2E700731F56 /* SearchViewController.swift */,
 				1B53B32121ECCEC500DBC774 /* SearchCell.swift */,
 			);
-			path = "SearchViewController'";
+			path = Search;
 			sourceTree = "<group>";
 		};
-		1B9482FC21D3B26300731F56 /* FavoritesViewController */ = {
+		1B9482FC21D3B26300731F56 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
 				1B94830521D3B2DC00731F56 /* FavoritesViewController.swift */,
 			);
-			path = FavoritesViewController;
+			path = Favorites;
 			sourceTree = "<group>";
 		};
-		1BC2D9B021D4E88C00DBB362 /* AddPostViewController */ = {
+		1BC2D9B021D4E88C00DBB362 /* AddPost */ = {
 			isa = PBXGroup;
 			children = (
 				1BC2D9B121D4E8B700DBB362 /* AddPostViewController.swift */,
@@ -220,7 +235,7 @@
 				1B1C54ED21D63999005A15BB /* PhotoSelectorHeader.swift */,
 				1B64DFD721D8F77D006442BA /* SharePhotoController.swift */,
 			);
-			path = AddPostViewController;
+			path = AddPost;
 			sourceTree = "<group>";
 		};
 		629E03A5207685C2D3E82378 /* Pods */ = {
@@ -420,6 +435,7 @@
 				1BC2D9B221D4E8B700DBB362 /* AddPostViewController.swift in Sources */,
 				1BCA500621CEBAB1004432C2 /* AnimationsExt.swift in Sources */,
 				1B9482FE21D3B2B700731F56 /* MainTabBarController.swift in Sources */,
+				1B7D39D921F20F5800307B2F /* CustiomAnimationDismisser.swift in Sources */,
 				1B72B44F21CBC47E00C5765F /* SignUpViewController.swift in Sources */,
 				1B1C54EC21D63416005A15BB /* PhotoSelectorCell.swift in Sources */,
 				1B64DFD821D8F77D006442BA /* SharePhotoController.swift in Sources */,
@@ -430,6 +446,8 @@
 				1B53B32221ECCEC500DBC774 /* SearchCell.swift in Sources */,
 				1B4B41F121DE63B30033ABA6 /* CustomImageView.swift in Sources */,
 				1B94830C21D3B4A700731F56 /* ButtonTargets.swift in Sources */,
+				1B7D39DB21F2142800307B2F /* Targets + NavItem.swift in Sources */,
+				1B7D39D521F1F3E300307B2F /* PreviewPhotoContainerView.swift in Sources */,
 				1B1C54EE21D63999005A15BB /* PhotoSelectorHeader.swift in Sources */,
 				1B72B44D21CBC47E00C5765F /* AppDelegate.swift in Sources */,
 				1B94830421D3B2D200731F56 /* extension.swift in Sources */,
@@ -437,9 +455,11 @@
 				1B94830021D3B2C100731F56 /* ProfileViewController.swift in Sources */,
 				1B9482F521D3B12E00731F56 /* HomeViewController.swift in Sources */,
 				1B0EB5C921DCFF7B002EB798 /* Post.swift in Sources */,
+				1B7D39D721F2055000307B2F /* CustomAnimationPresentor.swift in Sources */,
 				1B94830621D3B2DC00731F56 /* FavoritesViewController.swift in Sources */,
 				1B1964C721CE79EE00D4D068 /* LogInExtension.swift in Sources */,
 				1B53B32021ECC0AD00DBC774 /* FirebaseExt.swift in Sources */,
+				1B7D39D321F1DCA600307B2F /* CameraController.swift in Sources */,
 				1B7E943021E4FF13000B99C0 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
