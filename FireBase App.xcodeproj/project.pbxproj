@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1B0EB5C921DCFF7B002EB798 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0EB5C821DCFF7B002EB798 /* Post.swift */; };
 		1B0EB5CB21DD0260002EB798 /* ProfilePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0EB5CA21DD0260002EB798 /* ProfilePhotoCell.swift */; };
+		1B13670121F5F75800FA2BF3 /* CommentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B13670021F5F75800FA2BF3 /* CommentsController.swift */; };
+		1B13670321F6231B00FA2BF3 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B13670221F6231B00FA2BF3 /* CommentCell.swift */; };
+		1B13670921F6322F00FA2BF3 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B13670821F6322F00FA2BF3 /* Comment.swift */; };
 		1B1964C721CE79EE00D4D068 /* LogInExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1964C621CE79EE00D4D068 /* LogInExtension.swift */; };
 		1B1C54EC21D63416005A15BB /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1C54EB21D63416005A15BB /* PhotoSelectorCell.swift */; };
 		1B1C54EE21D63999005A15BB /* PhotoSelectorHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1C54ED21D63999005A15BB /* PhotoSelectorHeader.swift */; };
@@ -47,6 +50,9 @@
 /* Begin PBXFileReference section */
 		1B0EB5C821DCFF7B002EB798 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		1B0EB5CA21DD0260002EB798 /* ProfilePhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoCell.swift; sourceTree = "<group>"; };
+		1B13670021F5F75800FA2BF3 /* CommentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsController.swift; sourceTree = "<group>"; };
+		1B13670221F6231B00FA2BF3 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		1B13670821F6322F00FA2BF3 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		1B1964C621CE79EE00D4D068 /* LogInExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInExtension.swift; sourceTree = "<group>"; };
 		1B1C54EB21D63416005A15BB /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		1B1C54ED21D63999005A15BB /* PhotoSelectorHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorHeader.swift; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 			children = (
 				1B0EB5C821DCFF7B002EB798 /* Post.swift */,
 				1B7E942F21E4FF13000B99C0 /* User.swift */,
+				1B13670821F6322F00FA2BF3 /* Comment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -195,6 +202,8 @@
 				1B9482F421D3B12E00731F56 /* HomeViewController.swift */,
 				1B4B41F221DE735F0033ABA6 /* HomePostCell.swift */,
 				1B7D39DA21F2142800307B2F /* Targets + NavItem.swift */,
+				1B13670021F5F75800FA2BF3 /* CommentsController.swift */,
+				1B13670221F6231B00FA2BF3 /* CommentCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -440,6 +449,7 @@
 				1B1C54EC21D63416005A15BB /* PhotoSelectorCell.swift in Sources */,
 				1B64DFD821D8F77D006442BA /* SharePhotoController.swift in Sources */,
 				1B72B46021CBD73300C5765F /* SignUpExtensions.swift in Sources */,
+				1B13670121F5F75800FA2BF3 /* CommentsController.swift in Sources */,
 				1B0EB5CB21DD0260002EB798 /* ProfilePhotoCell.swift in Sources */,
 				1B94830221D3B2C900731F56 /* HeaderView.swift in Sources */,
 				1B4B41F321DE735F0033ABA6 /* HomePostCell.swift in Sources */,
@@ -461,6 +471,8 @@
 				1B53B32021ECC0AD00DBC774 /* FirebaseExt.swift in Sources */,
 				1B7D39D321F1DCA600307B2F /* CameraController.swift in Sources */,
 				1B7E943021E4FF13000B99C0 /* User.swift in Sources */,
+				1B13670921F6322F00FA2BF3 /* Comment.swift in Sources */,
+				1B13670321F6231B00FA2BF3 /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

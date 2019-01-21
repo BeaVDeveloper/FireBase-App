@@ -37,3 +37,11 @@ extension HomeViewController {
         present(cameraController, animated: true, completion: nil)
     }
 }
+
+extension HomePostCell {
+    
+    @objc func handleComment() {
+        guard let post = post else { return }
+        delegate?.didTapComment(post: post)
+    }
+}
