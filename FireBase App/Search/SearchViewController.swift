@@ -83,7 +83,6 @@ class SearchViewController: UICollectionViewController, UICollectionViewDelegate
             dictionaries.forEach({ (key, value) in
                 
                 if key == Auth.auth().currentUser?.uid {
-                    print("Find myself")
                     return
                 }
                 

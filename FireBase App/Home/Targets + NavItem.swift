@@ -44,4 +44,8 @@ extension HomePostCell {
         guard let post = post else { return }
         delegate?.didTapComment(post: post)
     }
+    
+    @objc func handleLike() {
+        delegate?.didLike(for: self)
+    }
 }

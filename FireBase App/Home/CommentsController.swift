@@ -47,13 +47,12 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
             
             Database.fetchUserWithUID(uid: uid, completion: { (user) in
                 
-                
-                
                 let comment = Comment(user: user, dictionary: dictionary)
                 self.comments.append(comment)
+                
+                self.comments.sort(by: {$0.creationDate > $1.creationDate})
+                
                 self.collectionView.reloadData()
-                
-                
             })
             
         }) { (err) in

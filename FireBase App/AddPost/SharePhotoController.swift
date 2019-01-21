@@ -79,7 +79,6 @@ class SharePhotoController: UIViewController {
                     return
                 }
                 guard let imageUrl = url?.absoluteString else { return }
-                print("Successfully uploaded post image: ", imageUrl)
                 self.saveToDatabaseWithImageUrl(imageUrl: imageUrl)
             })
         }

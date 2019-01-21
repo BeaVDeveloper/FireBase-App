@@ -11,6 +11,7 @@ import UIKit
 
 protocol HomePostCellDelegate {
     func didTapComment(post: Post)
+    func didLike(for cell: HomePostCell)
 }
 
 
@@ -22,6 +23,8 @@ class HomePostCell: UICollectionViewCell {
         didSet {
             guard let postImageUrl = post?.imageUrl else { return }
             guard let profileImageUrl = post?.user.profileImageUrl else { return }
+            
+            likeButton.setImage(post?.hasLiked == true ? #imageLiteral(resourceName: "icons8-heart-outline-filled-100").withRenderingMode(.alwaysOriginal) : #imageLiteral(resourceName: "icons8-heart-outline-100").withRenderingMode(.alwaysOriginal) , for: .normal)
             
             photoImageView.loadImage(urlString: postImageUrl)
             userProfileImageView.loadImage(urlString: profileImageUrl)
@@ -75,9 +78,10 @@ class HomePostCell: UICollectionViewCell {
         return button
     }()
     
-    let likeButton: UIButton = {
+    lazy var likeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "icons8-heart-outline-100").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         return button
     }()
     

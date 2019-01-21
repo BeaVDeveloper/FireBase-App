@@ -10,7 +10,14 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
+protocol ProfileHeaderDelegate {
+    func didChangeToListView()
+    func didChangeToGridView()
+}
+
 class HeaderView: UICollectionViewCell {
+    
+    var delegate: ProfileHeaderDelegate?
     
     var user: User? {
         didSet {
@@ -107,21 +114,22 @@ class HeaderView: UICollectionViewCell {
     
     let nameLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Yuriy Velko"
         lbl.font = UIFont.boldSystemFont(ofSize: 16)
         return lbl
     }()
     
-    let gridButton: UIButton = {
+    lazy var gridButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
+        button.addTarget(self, action: #selector(handleChangeToGrid), for: .touchUpInside)
         return button
     }()
     
-    let listButton: UIButton = {
+    lazy var listButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(#imageLiteral(resourceName: "list"), for: .normal)
         btn.tintColor = UIColor(white: 0, alpha: 0.2)
+        btn.addTarget(self, action: #selector(handleChangeToList), for: .touchUpInside)
         return btn
     }()
     
@@ -131,6 +139,18 @@ class HeaderView: UICollectionViewCell {
         btn.tintColor = UIColor(white: 0, alpha: 0.2)
         return btn
     }()
+    
+    @objc func handleChangeToGrid() {
+        gridButton.tintColor = #colorLiteral(red: 0.06666666667, green: 0.6039215686, blue: 0.9294117647, alpha: 1)
+        listButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        delegate?.didChangeToGridView()
+    }
+    
+    @objc func handleChangeToList() {
+        listButton.tintColor = #colorLiteral(red: 0.06666666667, green: 0.6039215686, blue: 0.9294117647, alpha: 1)
+        gridButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        delegate?.didChangeToListView()
+    }
     
     
     override init(frame: CGRect) {

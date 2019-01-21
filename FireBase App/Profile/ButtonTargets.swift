@@ -25,7 +25,6 @@ extension ProfileViewController {
                 let login = mainStoryboard.instantiateViewController(withIdentifier: "LoginVC") as! LogInViewController
                 self.present(login, animated: true, completion: nil)
                 
-                print("Successfully log out")
             } catch let signOutErr {
                 print("Failed to sign out: ", signOutErr)
             }
@@ -44,7 +43,6 @@ extension HeaderView {
     }
     
     @objc func handleEditProfileOrFollow() {
-        print("Follow")
         
         editProfileFollowBtn.animateTap()
         
@@ -61,8 +59,6 @@ extension HeaderView {
                     return
                 }
                 
-                print("Successfully unfollowed user: ", self.user?.username ?? "")
-                
                 self.setupFollowStyle()
             }
             
@@ -77,8 +73,6 @@ extension HeaderView {
                     print("Failed to follow user: ", err)
                     return
                 }
-                
-                print("Successfully followed user: ", self.user?.username ?? "")
                 
                 self.editProfileFollowBtn.setTitle("Unfollow", for: .normal)
                 self.editProfileFollowBtn.backgroundColor = .white
