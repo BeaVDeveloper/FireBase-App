@@ -13,6 +13,7 @@ import FirebaseDatabase
 protocol ProfileHeaderDelegate {
     func didChangeToListView()
     func didChangeToGridView()
+    func didTapEditProfileButton(user: User)
 }
 
 class HeaderView: UICollectionViewCell {

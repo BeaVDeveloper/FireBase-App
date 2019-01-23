@@ -36,7 +36,7 @@ class ProfileViewController: UICollectionViewController, UICollectionViewDelegat
     var posts = [Post]()
     
     private func paginatePosts() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("posts").child(uid)
         
         var query = ref.queryOrdered(byChild: "creationDate")
@@ -158,6 +158,18 @@ class ProfileViewController: UICollectionViewController, UICollectionViewDelegat
 }
 
 extension ProfileViewController: ProfileHeaderDelegate {
+    
+    func didTapEditProfileButton(user: User) {
+        print("Edit button tapped from ProfileVC")
+        
+        let editProfileController = EditProfileController()
+        editProfileController.user = user
+        let navController = UINavigationController(rootViewController: editProfileController)
+        
+        present(navController, animated: true, completion: nil)
+    }
+    
+    
     func didChangeToListView() {
         isGridView = false
         collectionView.reloadData()

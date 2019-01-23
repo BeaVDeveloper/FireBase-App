@@ -12,12 +12,11 @@ import FirebaseDatabase
 
 extension ProfileViewController {
     
-   
     @objc func handleLogOut() {
         
         let alert = UIAlertController(title: nil, message: nil,preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Log Out", style: .destructive,handler: {(_) in
-
+            
             do {
                 try Auth.auth().signOut()
                 
@@ -31,11 +30,10 @@ extension ProfileViewController {
             
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:nil))
-
+        
         present(alert, animated: true, completion: nil)
     }
 }
-
 
 extension HeaderView {
     @objc func handlePhoto() {
@@ -78,9 +76,11 @@ extension HeaderView {
                 self.editProfileFollowBtn.backgroundColor = .white
                 self.editProfileFollowBtn.setTitleColor(.black, for: .normal)
             }
+        } else {
+            guard let user = self.user else { return }
+            delegate?.didTapEditProfileButton(user: user)
         }
     }
-    
     
     func setupFollowStyle() {
         self.editProfileFollowBtn.setTitle("Follow", for: .normal)
@@ -89,3 +89,4 @@ extension HeaderView {
         self.editProfileFollowBtn.layer.borderColor = UIColor(white: 0, alpha: 0.2).cgColor
     }
 }
+
