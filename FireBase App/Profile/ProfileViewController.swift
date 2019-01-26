@@ -160,7 +160,6 @@ class ProfileViewController: UICollectionViewController, UICollectionViewDelegat
 extension ProfileViewController: ProfileHeaderDelegate {
     
     func didTapEditProfileButton(user: User) {
-        print("Edit button tapped from ProfileVC")
         
         let editProfileController = EditProfileController()
         editProfileController.user = user

@@ -36,10 +36,6 @@ extension ProfileViewController {
 }
 
 extension HeaderView {
-    @objc func handlePhoto() {
-        print("PHOTO")
-    }
-    
     @objc func handleEditProfileOrFollow() {
         
         editProfileFollowBtn.animateTap()

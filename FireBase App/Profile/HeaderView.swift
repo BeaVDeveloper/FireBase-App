@@ -54,53 +54,10 @@ class HeaderView: UICollectionViewCell {
         }
     }
     
-    let photoButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setBackgroundImage(#imageLiteral(resourceName: "plus_photo"), for: .normal)
-        btn.addTarget(self, action: #selector(handlePhoto), for: .touchUpInside)
-        return btn
-    }()
+    let postsLabel = CustomAttributedLabel(tLine: "11", bLine: "posts", color: nil)
+    let followersLabel = CustomAttributedLabel(tLine: "0", bLine: "followers", color: nil)
+    let followingLabel = CustomAttributedLabel(tLine: "0", bLine: "following", color: nil)
     
-    let postsLabel: UILabel = {
-        let label = UILabel()
-        
-        let attributedText = NSMutableAttributedString(string: "11\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
-        
-        attributedText.append(NSAttributedString(string: "posts", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
-        
-        label.attributedText = attributedText
-        
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    let followersLabel: UILabel = {
-        let label = UILabel()
-        
-        let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
-        
-        attributedText.append(NSAttributedString(string: "followers", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
-        
-        label.attributedText = attributedText
-        
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    let followingLabel: UILabel = {
-        let label = UILabel()
-        
-        let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
-        
-        attributedText.append(NSAttributedString(string: "following", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
-        
-        label.attributedText = attributedText
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
-    }()
     lazy var editProfileFollowBtn: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("Edit profile", for: .normal)
@@ -113,19 +70,15 @@ class HeaderView: UICollectionViewCell {
         return btn
     }()
     
-    let nameLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.font = UIFont.boldSystemFont(ofSize: 16)
-        return lbl
-    }()
-    
+    let nameLabel = CustomAttributedLabel(tLine: nil, bLine: nil, color: nil)
+
     lazy var gridButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
         button.addTarget(self, action: #selector(handleChangeToGrid), for: .touchUpInside)
         return button
     }()
-    
+
     lazy var listButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(#imageLiteral(resourceName: "list"), for: .normal)
@@ -133,7 +86,7 @@ class HeaderView: UICollectionViewCell {
         btn.addTarget(self, action: #selector(handleChangeToList), for: .touchUpInside)
         return btn
     }()
-    
+
     let bookmarkButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(#imageLiteral(resourceName: "ribbon"), for: .normal)
@@ -153,6 +106,8 @@ class HeaderView: UICollectionViewCell {
         delegate?.didChangeToListView()
     }
     
+    let profileImage = CustomImageView(frame: .zero)
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -160,18 +115,21 @@ class HeaderView: UICollectionViewCell {
         
         setupBottomToolbar()
         
-        addSubview(photoButton)
-        photoButton.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 80, height: 80)
-        photoButton.layer.cornerRadius = 80 / 2
+        setupView()
+    }
+    
+    private func setupView() {
+        addSubview(profileImage)
+        profileImage.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 80, height: 80)
+        profileImage.layer.cornerRadius = 80 / 2
         
         addSubview(nameLabel)
-        nameLabel.anchor(top: photoButton.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 11, paddingBottom: 0, paddingRight: 0, width: 100, height: 30)
+        nameLabel.anchor(top: profileImage.bottomAnchor, left: profileImage.leftAnchor, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 30)
         
         setupUserStaksView()
         
         addSubview(editProfileFollowBtn)
         editProfileFollowBtn.anchor(top: postsLabel.bottomAnchor, left: postsLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
-        
     }
     
     private func setupUserStaksView() {
@@ -180,7 +138,7 @@ class HeaderView: UICollectionViewCell {
         stackView.distribution = .fillEqually
         
         addSubview(stackView)
-        stackView.anchor(top: topAnchor, left: photoButton.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 50)
+        stackView.anchor(top: topAnchor, left: profileImage.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 50)
     }
     
     private func setupBottomToolbar() {
@@ -225,7 +183,8 @@ class HeaderView: UICollectionViewCell {
             let image = UIImage(data: data)
             //need to get back onto the main UI thread
             DispatchQueue.main.async {
-                self.photoButton.setBackgroundImage(image, for: .normal)
+                self.profileImage.image = image
+//                self.photoButton.layer.cornerRadius = 80 / 2
             }
         }.resume()
     }

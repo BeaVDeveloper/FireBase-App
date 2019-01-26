@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 
-class CommentsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class CommentsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, TapOnNameDelegate {
     
     var post: Post?
     let cellId = "cellId"
@@ -66,7 +66,7 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CommentCell
         
         cell.comment = self.comments[indexPath.item]
-        
+        cell.delegate = self
         return cell
     }
     
@@ -118,6 +118,16 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     
     override var canBecomeFirstResponder: Bool {
         return true
+    }
+    
+    func didTapOnName(uid: String) {
+        let profileViewController = ProfileViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        profileViewController.userId = uid
+        if uid == Auth.auth().currentUser?.uid {
+            self.tabBarController?.selectedIndex = 4
+            return
+        }
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
 }
 

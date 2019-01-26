@@ -22,4 +22,41 @@ extension Database {
             print("Failed to fecth user for posts: ", err)
         }
     }
+    
+    static func saveUserValues(uid: String, values: [String: Any] ,completion: @escaping () -> ()) {
+        
+        Database.database().reference().child("users").child(uid).updateChildValues(values, withCompletionBlock: { (error, ref) in
+            
+            if let err = error {
+                print("Failed to save user in db: ", err)
+                return
+            }
+            completion()
+        })
+    }
+    
+    static func saveImageToDB(uid: String, data: Data?, name: String, email: String, completion: @escaping () -> ()) {
+        
+        guard let uploadData = data else { return }
+        
+        let filename = NSUUID().uuidString
+        let storageItem = Storage.storage().reference().child("users").child(filename)
+        
+        storageItem.putData(uploadData, metadata: nil) { (_, err) in
+            
+            storageItem.downloadURL(completion: { (url, err) in
+                if let err = err {
+                    print("Failed to upload image: ", err)
+                    return
+                }
+                guard let imageUrl = url?.absoluteString else { return }
+                print("Successfully uploaded image: ", imageUrl)
+                
+                let values = ["username": name, "email": email, "profileImageUrl": imageUrl]
+                
+                Database.saveUserValues(uid: uid, values: values, completion: {})
+                completion()
+            })
+        }
+    }
 }

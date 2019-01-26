@@ -16,14 +16,16 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate, 
         didSet {
             guard let imageUrl = user?.profileImageUrl else { return }
             imageView.loadImage(urlString: imageUrl)
+            currentImageView.loadImage(urlString: imageUrl)
             nameTextField.text = user?.username
             emailTextField.text = Auth.auth().currentUser?.email
         }
     }
     
+    var currentImageView = CustomImageView(frame: .zero)
+    
     lazy var imageView: CustomImageView = {
-        let iv = CustomImageView()
-        iv.clipsToBounds = true
+        let iv = CustomImageView(frame: .zero)
         iv.layer.borderWidth = 0.5
         iv.layer.borderColor = UIColor.black.cgColor
         iv.isUserInteractionEnabled = true
@@ -41,7 +43,6 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate, 
     }()
     
     @objc func handleSelectPhoto() {
-        print("Photo")
         
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -61,52 +62,17 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate, 
         dismiss(animated: true, completion: nil)
     }
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Name"
-        label.textColor = .lightGray
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        return label
-    }()
     
-    lazy var nameTextField: UITextField = {
-        let tf = UITextField()
-        tf.font = UIFont.systemFont(ofSize: 16)
-        tf.placeholder = "Enter name"
-        tf.textColor = .black
-        tf.addTarget(self, action: #selector(handleTapTextField(sender:)), for: .editingDidBegin)
-        tf.returnKeyType = .next
-        return tf
-    }()
+    let nameLabel = CustomAttributedLabel(tLine: "Name", bLine: nil, color: .lightGray)
+    let emailLabel = CustomAttributedLabel(tLine: "Email", bLine: nil, color: .lightGray)
     
-    let emailLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Email"
-        label.textColor = .lightGray
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        return label
-    }()
+    let nameTextField = CustomTextField(txt: "Enter name", keyType: .next)
+    let emailTextField = CustomTextField(txt: "Enter email", keyType: .done)
     
-    lazy var emailTextField: UITextField = {
-        let tf = UITextField()
-        tf.font = UIFont.boldSystemFont(ofSize: 16)
-        tf.placeholder = "Enter email"
-        tf.textColor = .black
-        tf.addTarget(self, action: #selector(handleTapTextField(sender:)), for: .editingDidBegin)
-        tf.addTarget(self, action: #selector(chageEmail), for: .editingDidEnd)
-        tf.returnKeyType = .done
-        return tf
-    }()
     
     @objc func handleTapTextField(sender: UITextField) {
-        
-        if sender == nameTextField {
-            nameSeparatorView.backgroundColor = #colorLiteral(red: 0.007513592951, green: 0.5695900321, blue: 0.8627313972, alpha: 1)
-            emailSeparatorView.backgroundColor = .lightGray
-        } else if sender == emailTextField {
-            nameSeparatorView.backgroundColor = .lightGray
-            emailSeparatorView.backgroundColor = #colorLiteral(red: 0.007513592951, green: 0.5695900321, blue: 0.8627313972, alpha: 1)
-        }
+        nameSeparatorView.backgroundColor = #colorLiteral(red: 0.007513592951, green: 0.5695900321, blue: 0.8627313972, alpha: 1)
+        emailSeparatorView.backgroundColor = .lightGray
     }
     
     let nameSeparatorView = UIView()
@@ -115,30 +81,32 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         emailTextField.delegate = self
         nameTextField.delegate = self
         
         navigationItem.title = "Profile Editor"
         view.backgroundColor = .white
         
+        setupTargets()
+        
         setupNavigationButtons()
         setupView()
+    }
+    
+    func setupTargets() {
+        nameTextField.addTarget(self, action: #selector(handleTapTextField(sender:)), for: .editingDidBegin)
+        emailTextField.addTarget(self, action: #selector(changeEmail), for: .editingDidBegin)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         nameSeparatorView.backgroundColor = .lightGray
-        emailSeparatorView.backgroundColor = .lightGray
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        if textField == emailTextField {
-            chageEmail()
-            
-        } else {
-            emailTextField.becomeFirstResponder()
-        }
+        emailTextField.becomeFirstResponder()
         return true
     }
 }

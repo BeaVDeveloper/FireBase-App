@@ -20,20 +20,9 @@ class SearchCell: UICollectionViewCell {
         }
     }
     
-    let profileImageView: CustomImageView = {
-        let iv = CustomImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.backgroundColor = .red
-        return iv
-    }()
+    let profileImageView = CustomImageView(frame: .zero)
     
-    let usernameLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Username"
-        lbl.font = UIFont.boldSystemFont(ofSize: 14)
-        return lbl
-    }()
+    let usernameLabel = CustomAttributedLabel(tLine: nil, bLine: nil, color: nil)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -18,12 +18,7 @@ class ProfilePhotoCell: UICollectionViewCell {
         }
     }
     
-    let photoImageView: CustomImageView = {
-        let iv = CustomImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
-    }()
+    let photoImageView = CustomImageView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

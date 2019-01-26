@@ -66,34 +66,11 @@ extension SignUpViewController {
             
             guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
             
-            let filename = NSUUID().uuidString
-            let storageItem = Storage.storage().reference().child("users").child(filename)
-            
-            storageItem.putData(uploadData, metadata: nil) { (_, err) in
+            Database.saveImageToDB(uid: uid, data: uploadData, name: name, email: email, completion: {
                 
-                storageItem.downloadURL(completion: { (url, err) in
-                    if let err = err {
-                        print("Failed to upload image: ", err)
-                        return
-                    }
-                    guard let imageUrl = url?.absoluteString else { return }
-                    print("Successfully uploaded image: ", imageUrl)
-                    
-                    let usernameValues = ["username": name, "email": email, "profileImageUrl" : imageUrl]
-                    let values = [uid: usernameValues]
-                    Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, ref) in
-                        
-                        if let err = error {
-                            print("Failed to save user in db: ", err)
-                            return
-                        }
-                        print("Successfully save saved user info to db")
-                        
-                        let home = MainTabBarController()
-                        self.present(home, animated: true, completion: nil)
-                    })
-                })
-            }
+                let home = MainTabBarController()
+                self.present(home, animated: true, completion: nil)
+            })
         }
     }
 }

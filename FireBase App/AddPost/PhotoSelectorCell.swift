@@ -10,14 +10,7 @@ import UIKit
 
 class PhotoSelectorCell: UICollectionViewCell {
     
-    
-    let photoImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.backgroundColor = .lightGray
-        return iv
-    }()
+    let photoImageView = CustomImageView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

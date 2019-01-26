@@ -61,11 +61,9 @@ class LogInViewController: UIViewController {
                 return
             }
             
-            guard let uid = Auth.auth().currentUser?.uid else {return}
+         //   guard let uid = Auth.auth().currentUser?.uid else {return}
             
             if Auth.auth().currentUser != nil {
-                print("Successfully signed in: ", uid)
-               
                 let home = MainTabBarController()
                 self.present(home, animated: true, completion: nil)
             }

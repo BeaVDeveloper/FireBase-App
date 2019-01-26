@@ -42,10 +42,15 @@ extension HomePostCell {
     
     @objc func handleComment() {
         guard let post = post else { return }
-        delegate?.didTapComment(post: post)
+        homeDelegate?.didTapComment(post: post)
+    }
+    
+    @objc func handleName() {
+        guard let uid = post?.user.uid else { return }
+        nameTapDelegate?.didTapOnName(uid: uid)
     }
     
     @objc func handleLike() {
-        delegate?.didLike(for: self)
+        homeDelegate?.didLike(for: self)
     }
 }

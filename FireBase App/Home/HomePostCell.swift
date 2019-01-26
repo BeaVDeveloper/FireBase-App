@@ -14,10 +14,15 @@ protocol HomePostCellDelegate {
     func didLike(for cell: HomePostCell)
 }
 
+protocol TapOnNameDelegate {
+    func didTapOnName(uid: String)
+}
+
 
 class HomePostCell: UICollectionViewCell {
     
-    var delegate: HomePostCellDelegate?
+    var homeDelegate: HomePostCellDelegate?
+    var nameTapDelegate: TapOnNameDelegate?
     
     var post: Post? {
         didSet {
@@ -50,68 +55,31 @@ class HomePostCell: UICollectionViewCell {
         captionLabel.attributedText = attributedText
     }
     
-    let userProfileImageView: CustomImageView = {
-        let iv = CustomImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
-    }()
+    let userProfileImageView = CustomImageView(frame: .zero)
+    let photoImageView = CustomImageView(frame: .zero)
     
-    let photoImageView: CustomImageView = {
-        let iv = CustomImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
-    }()
+    let usernameLabel = CustomAttributedLabel(tLine: nil, bLine: nil, color: nil)
+    let captionLabel = CustomAttributedLabel(tLine: nil, bLine: nil, color: nil)
     
-    let usernameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Username"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        return label
-    }()
+    let optionsButton = CustomHeaderButton(image: nil, title: "•••")
+    let likeButton = CustomHeaderButton(image: #imageLiteral(resourceName: "icons8-heart-outline-100"), title: nil)
+    let commentButton = CustomHeaderButton(image: #imageLiteral(resourceName: "comment"), title: nil)
+    let bookmarkButton = CustomHeaderButton(image: #imageLiteral(resourceName: "ribbon"), title: nil)
+    let sendMessageButton = CustomHeaderButton(image: #imageLiteral(resourceName: "send2"), title: nil)
     
-    let optionsButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("•••", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        return button
-    }()
     
-    lazy var likeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "icons8-heart-outline-100").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var commentButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleComment), for: .touchUpInside)
-        return button
-    }()
-    
-    let sendMessageButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
-        return button
-    }()
-    
-    let bookmarkButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "ribbon").withRenderingMode(.alwaysOriginal), for: .normal)
-        return button
-    }()
-    
-    let captionLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        return label
-    }()
+    func setupTargets() {
+        usernameLabel.isUserInteractionEnabled = true
+        commentButton.addTarget(self, action: #selector(handleComment), for: .touchUpInside)
+        likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
+        usernameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleName)))
+        userProfileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleName)))
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        setupTargets()
         
         addSubview(userProfileImageView)
         addSubview(usernameLabel)

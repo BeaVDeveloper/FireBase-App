@@ -11,6 +11,7 @@ import UIKit
 
 class CommentInputTextView: UITextView {
     
+    
     fileprivate let placeholderLabel: UILabel = {
         let label = UILabel()
         label.text = "Enter Comment"

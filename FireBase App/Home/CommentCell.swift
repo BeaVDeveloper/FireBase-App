@@ -10,6 +10,8 @@ import UIKit
 
 class CommentCell: UICollectionViewCell {
     
+    var delegate: TapOnNameDelegate?
+    
     var comment: Comment? {
         didSet {
             guard let comment = comment else { return }
@@ -33,16 +35,13 @@ class CommentCell: UICollectionViewCell {
     }()
     
     
-    let profileImageView: CustomImageView = {
-        let iv = CustomImageView()
-        iv.clipsToBounds = true
-        iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = .blue
-        return iv
-    }()
+    let profileImageView = CustomImageView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageTap)))
         
         addSubview(profileImageView)
         profileImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
@@ -60,5 +59,10 @@ class CommentCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func handleImageTap() {
+        guard let uid = comment?.user.uid else { return }
+        delegate?.didTapOnName(uid: uid)
     }
 }

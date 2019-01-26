@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, HomePostCellDelegate {
+class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
     
@@ -34,8 +34,8 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func fetchAllPosts() {
-        fetchPosts()
         fetchFollowingUsersIds()
+        fetchPosts()
     }
     
     fileprivate func fetchFollowingUsersIds() {
@@ -119,12 +119,15 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePostCell
-        
         cell.post = posts[indexPath.item]
-        cell.delegate = self
+        cell.homeDelegate = self
+        cell.nameTapDelegate = self
         
         return cell
     }
+}
+
+extension HomeViewController: HomePostCellDelegate, TapOnNameDelegate {
     
     func didTapComment(post: Post) {
         let commentsController = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
@@ -151,5 +154,15 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             
             self.collectionView.reloadItems(at: [indexPath])
         }
+    }
+    
+    func didTapOnName(uid: String) {
+        let profileViewController = ProfileViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        profileViewController.userId = uid
+        if uid == Auth.auth().currentUser?.uid {
+            self.tabBarController?.selectedIndex = 4
+            return
+        }
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
 }

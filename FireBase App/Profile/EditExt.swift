@@ -59,38 +59,31 @@ extension EditProfileController {
     }
     
     @objc func handleDone() {
-        print("Done")
+        
+        guard let name = nameTextField.text else { return }
+        guard let uid = user?.uid else { return }
+        guard let email = user?.email else { return }
+        
+        let currentData = currentImageView.image?.jpegData(compressionQuality: 0.3)
+        let changedData = imageView.image?.jpegData(compressionQuality: 0.3)
+        
+        if currentData != changedData {
+            Database.saveImageToDB(uid: uid, data: changedData, name: name, email: email) {
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+        } else {
+            let values = ["username": name]
+            Database.saveUserValues(uid: uid, values: values) {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
-    
-    @objc func chageEmail() {
-        
-        guard let email = emailTextField.text?.lowercased() else { return }
-        
-        if email != user?.email.lowercased() {
-            
-            let alert = UIAlertController(title: "Changing Email", message: "Are you sure want to change email? You will need to confirm it in your actual email", preferredStyle: .alert)
-            
-            let confirmAction = UIAlertAction(title: "Yes", style: .default) { (_) in
-                
-                print("Perform change email adress")
-                
-                Auth.auth().currentUser?.updateEmail(to: email, completion: { (err) in
-                    if let err = err {
-                        print("Failed to update email: ", err)
-                        return
-                    }
-                    print("Successfully update email: ", email)
-                })
-            }
-            
-            let cancelAction = UIAlertAction(title: "No", style: .destructive) { (_) in
-                self.emailTextField.text = self.user?.email.lowercased()
-            }
-            
-            alert.addAction(confirmAction)
-            alert.addAction(cancelAction)
-            present(alert, animated: true, completion: nil)
-        }
+    @objc func changeEmail() {
+        let emailChangeVC = EmailChange()
+        emailChangeVC.user = user
+        let navController = UINavigationController(rootViewController: emailChangeVC)
+        present(navController, animated: false, completion: nil)
     }
 }
